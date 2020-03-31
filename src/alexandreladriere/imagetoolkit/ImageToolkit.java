@@ -29,7 +29,7 @@ public final class ImageToolkit {
             File input = new File(inPath);
             try {
                 BufferedImage image = ImageIO.read(input);
-                int scaleType = Image.SCALE_DEFAULT;
+                int scaleType;
                 if (smooth) {
                     scaleType = Image.SCALE_SMOOTH;
                 } else {
