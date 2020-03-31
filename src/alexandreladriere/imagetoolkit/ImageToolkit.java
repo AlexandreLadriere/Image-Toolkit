@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public final class ImageToolkit {
     /**
-     * Resize an image
+     * Resize an image according to the given dimensions
      *
      * @param inPath    Path of the image you want to resize (with filename)
      * @param outPath   Destination path to save the image to
@@ -38,6 +38,40 @@ public final class ImageToolkit {
                 BufferedImage resized = resize(image, newHeight, newWidth, scaleType);
                 File output = new File(outPath);
                 ImageIO.write(resized, extension, output);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Resize an image according to the given ratio
+     *
+     * @param inPath  Path of the image you want to resize (with filename)
+     * @param outPath Destination path to save the image to
+     * @param ratio   Scale ratio
+     * @param smooth  Indicates if you want a smooth and slow resize or a fast resize (true: smooth, false: fast)
+     */
+    public static void resize(String inPath, String outPath, int ratio, boolean smooth) {
+        String extension = FilePathManipulation.getExtension(inPath).toLowerCase();
+        // checks if the given file format is supported
+        if (ImageExtensions.contains(extension)) {
+            File input = new File(inPath);
+            try {
+                BufferedImage image = ImageIO.read(input);
+                int scaleType;
+                if (smooth) {
+                    scaleType = Image.SCALE_SMOOTH;
+                } else {
+                    scaleType = Image.SCALE_FAST;
+                }
+                double factor = (double) ratio / (double) 100;
+                int newWidth = (int) Math.round((double) image.getWidth() * factor);
+                int newHeight = (int) Math.round((double) image.getHeight() * factor);
+                BufferedImage resized = resize(image, newHeight, newWidth, scaleType);
+                File output = new File(outPath);
+                ImageIO.write(resized, extension, output);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
