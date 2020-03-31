@@ -23,7 +23,7 @@ public final class ImageToolkit {
      * @param smooth    Indicates if you want a smooth and slow resize or a fast resize (true: smooth, false: fast)
      */
     public static void resize(String inPath, String outPath, int newWidth, int newHeight, boolean smooth) {
-        String extension = FilePathManipulation.getExtension(inPath);
+        String extension = FilePathManipulation.getExtension(inPath).toLowerCase();
         // checks if the given file format is supported
         if (ImageExtensions.contains(extension)) {
             File input = new File(inPath);
