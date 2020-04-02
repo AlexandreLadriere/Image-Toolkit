@@ -4,8 +4,8 @@ public enum ImageExtensions {
     PNG("png"),
     JPG("jpg"),
     JPEG("jpeg"),
-    GIF("gif"),
     BMP("bmp");
+    // gif removed because some gif images may cause issues (see: https://stackoverflow.com/a/23851091)
 
     private String extension;
 
