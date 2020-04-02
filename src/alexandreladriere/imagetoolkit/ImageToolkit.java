@@ -147,7 +147,7 @@ public final class ImageToolkit {
      * @param isPng  Boolean to indicates if the image is a png or not, in order to know if we can use alpha or not (true: png; false: not png)
      * @return The cropped image
      */
-    private static BufferedImage crop(BufferedImage img, int startX, int startY, int endX, int endY, boolean isPng) {
+    public static BufferedImage crop(BufferedImage img, int startX, int startY, int endX, int endY, boolean isPng) {
         BufferedImage tmp = img.getSubimage(startX, startY, img.getWidth() - (startX + (img.getWidth() - endX)), img.getHeight() - (startY + (img.getHeight() - endY)));
         int rgbType;
         if (isPng) {
@@ -171,7 +171,7 @@ public final class ImageToolkit {
      * @param isPng     Boolean to indicates if the image is a png or not, in order to know if we can use alpha or not (true: png; false: not png)
      * @return The resized image
      */
-    private static BufferedImage resize(BufferedImage img, int height, int width, int scaleType, boolean isPng) {
+    public static BufferedImage resize(BufferedImage img, int height, int width, int scaleType, boolean isPng) {
         Image tmp = img.getScaledInstance(width, height, scaleType);
         int rgbType;
         if (isPng) {
@@ -194,7 +194,7 @@ public final class ImageToolkit {
      * @param isPng Boolean to indicates if the image is a png or not, in order to know if we can use alpha or not (true: png; false: not png)
      * @return The rotated image
      */
-    private static BufferedImage rotate(BufferedImage img, double angle, boolean isPng) {
+    public static BufferedImage rotate(BufferedImage img, double angle, boolean isPng) {
         int rgbType;
         if (isPng) {
             rgbType = BufferedImage.TYPE_INT_ARGB; // allows alpha for png format
