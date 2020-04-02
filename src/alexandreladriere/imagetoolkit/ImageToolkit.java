@@ -154,7 +154,7 @@ public final class ImageToolkit {
         }
         BufferedImage cropped = new BufferedImage(tmp.getWidth(), tmp.getHeight(), rgbType);
         Graphics g = cropped.createGraphics();
-        g.drawImage(img, 0, 0, null);
+        g.drawImage(tmp, 0, 0, null);
         return cropped;
     }
 
