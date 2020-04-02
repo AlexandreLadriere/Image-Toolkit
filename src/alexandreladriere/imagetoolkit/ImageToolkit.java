@@ -5,6 +5,8 @@ import alexandreladriere.imagetoolkit.utils.ImageExtensions;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +45,45 @@ public final class ImageToolkit {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void rotate(String inPath, String outPath, double angle) {
+        String extensionIn = FilePathManipulation.getExtension(inPath).toLowerCase();
+        String extensionOut = FilePathManipulation.getExtension(outPath).toLowerCase();
+        // checks if the given file format is supported
+        if (ImageExtensions.contains(extensionIn) && ImageExtensions.contains(extensionOut)) {
+            File input = new File(inPath);
+            try {
+                BufferedImage image = ImageIO.read(input);
+                BufferedImage rotated = rotate(image, angle, extensionOut.equals(ImageExtensions.PNG.toString()));
+                File output = new File(outPath);
+                ImageIO.write(rotated, extensionOut, output); // à verifier
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static BufferedImage rotate(BufferedImage img, double angle, boolean isPng) {
+        int rgbType;
+        if (isPng) {
+            rgbType = BufferedImage.TYPE_INT_ARGB; // allows alpha for png format
+        } else {
+            rgbType = BufferedImage.TYPE_INT_RGB;
+        }
+        final double rads = Math.toRadians(angle);
+        final double sin = Math.abs(Math.sin(rads));
+        final double cos = Math.abs(Math.cos(rads));
+        final int w = (int) Math.floor(img.getWidth() * cos + img.getHeight() * sin);
+        final int h = (int) Math.floor(img.getHeight() * cos + img.getWidth() * sin);
+        final BufferedImage rotatedImage = new BufferedImage(w, h, rgbType);
+        final AffineTransform at = new AffineTransform();
+        at.translate(w / (double) 2, h / (double) 2);
+        at.rotate(rads, 0, 0);
+        at.translate(-img.getWidth() / (double) 2, -img.getHeight() / (double) 2);
+        final AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+        rotateOp.filter(img, rotatedImage);
+        return rotatedImage;
     }
 
     /**
