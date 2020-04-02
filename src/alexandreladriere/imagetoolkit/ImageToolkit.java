@@ -11,6 +11,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+// TODO: Add image to pdf
+// TODO: Add corner radius
+
 /**
  * Implement the model
  */
