@@ -46,7 +46,7 @@ public final class ImageToolkit {
     }
 
     /**
-     * Resize an image according to the given ratio
+     * Resize an image according to the given ratio (can be used to convert image to another format if ratio = 100)
      *
      * @param inPath  Path of the image you want to resize (with filename)
      * @param outPath Destination path to save the image to
