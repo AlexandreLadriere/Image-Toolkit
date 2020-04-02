@@ -19,7 +19,7 @@ public final class ImageToolkit {
      * Resize an image according to the given dimensions
      *
      * @param inPath    Path of the image you want to resize (with filename)
-     * @param outPath   Destination path to save the image to
+     * @param outPath   Destination path to save the image to (with file name)
      * @param newWidth  New width
      * @param newHeight New height
      * @param smooth    Indicates if you want a smooth and slow resize or a fast resize (true: smooth, false: fast)
@@ -51,7 +51,7 @@ public final class ImageToolkit {
      * Resize an image according to the given ratio (can be used to convert image to another format if ratio = 100)
      *
      * @param inPath  Path of the image you want to resize (with filename)
-     * @param outPath Destination path to save the image to
+     * @param outPath Destination path to save the image to (with file name)
      * @param ratio   Scale ratio (in %)
      * @param smooth  Indicates if you want a smooth and slow resize or a fast resize (true: smooth, false: fast)
      */
@@ -86,7 +86,7 @@ public final class ImageToolkit {
      * Rotates the given image according to the given angle
      *
      * @param inPath  Path of the image you want to resize (with filename)
-     * @param outPath Destination path to save the image to
+     * @param outPath Destination path to save the image to (with file name)
      * @param angle   Angle of rotation
      */
     public static void rotate(String inPath, String outPath, double angle) {
@@ -99,11 +99,63 @@ public final class ImageToolkit {
                 BufferedImage image = ImageIO.read(input);
                 BufferedImage rotated = rotate(image, angle, extensionOut.equals(ImageExtensions.PNG.toString()));
                 File output = new File(outPath);
-                ImageIO.write(rotated, extensionOut, output); // à verifier
+                ImageIO.write(rotated, extensionOut, output);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Crop the given images (the crop is a rectangle crop)
+     *
+     * @param inPath  Path of the image that you want to crop (with file name)
+     * @param outPath Destination path (with file name)
+     * @param startX  X of the upper left corner of the rectangle
+     * @param startY  Y of the upper left corner of the rectangle
+     * @param endX    X of the lower right corner of the rectangle
+     * @param endY    Y of the lower right corner of the rectangle
+     */
+    public static void crop(String inPath, String outPath, int startX, int startY, int endX, int endY) {
+        String extensionIn = FilePathManipulation.getExtension(inPath).toLowerCase();
+        String extensionOut = FilePathManipulation.getExtension(outPath).toLowerCase();
+        // checks if the given file format is supported
+        if (ImageExtensions.contains(extensionIn) && ImageExtensions.contains(extensionOut)) {
+            File input = new File(inPath);
+            try {
+                BufferedImage image = ImageIO.read(input);
+                BufferedImage cropped = crop(image, startX, startY, endX, endY, extensionOut.equals(ImageExtensions.PNG.toString()));
+                File output = new File(outPath);
+                ImageIO.write(cropped, extensionOut, output);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Crop the given image, according to the given positions (which is a rectangle)
+     *
+     * @param img    Image that you want to crop
+     * @param startX X of the upper left corner
+     * @param startY Y of the upper left corner
+     * @param endX   X of the lower right corner
+     * @param endY   Y of the lower right corner
+     * @param isPng  Boolean to indicates if the image is a png or not, in order to know if we can use alpha or not (true: png; false: not png)
+     * @return The cropped image
+     */
+    private static BufferedImage crop(BufferedImage img, int startX, int startY, int endX, int endY, boolean isPng) {
+        BufferedImage tmp = img.getSubimage(startX, startY, img.getWidth() - (startX + (img.getWidth() - endX)), img.getHeight() - (startY + (img.getHeight() - endY)));
+        int rgbType;
+        if (isPng) {
+            rgbType = BufferedImage.TYPE_INT_ARGB; // allows alpha for png format
+        } else {
+            rgbType = BufferedImage.TYPE_INT_RGB;
+        }
+        BufferedImage cropped = new BufferedImage(tmp.getWidth(), tmp.getHeight(), rgbType);
+        Graphics g = cropped.createGraphics();
+        g.drawImage(img, 0, 0, null);
+        return cropped;
     }
 
     /**
