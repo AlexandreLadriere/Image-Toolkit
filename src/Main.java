@@ -6,6 +6,6 @@ public class Main {
         // System.out.println(ImageExtensions.contains(".jpg"));
         // System.out.println(FilePathManipulation.getExtension("/src/extensions/text.test.txt"));
         // ImageToolkit.resize("C:\\Users\\Alexandre\\Desktop\\JAVA\\Snake\\src\\resources\\apple.png", "C:\\Users\\Alexandre\\Desktop\\JAVA\\Image Toolkit\\test.png", 500, 50, true);
-        // ImageToolkit.resize("C:\\Users\\Alexandre\\Desktop\\JAVA\\Snake\\src\\resources\\apple.png", "C:\\Users\\Alexandre\\Desktop\\JAVA\\Image Toolkit\\test.png", 200, true);
+        // ImageToolkit.resize("C:\\Users\\Alexandre\\Desktop\\JAVA\\Snake\\src\\resources\\apple.png", "C:\\Users\\Alexandre\\Desktop\\JAVA\\Image Toolkit\\test.jpg", 200, true);
     }
 }
