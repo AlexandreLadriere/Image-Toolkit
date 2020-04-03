@@ -12,8 +12,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-// TODO: Add image to pdf
-
 /**
  * Implement the model
  */
