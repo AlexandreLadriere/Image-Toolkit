@@ -5,6 +5,9 @@ import javax.swing.*;
  */
 public class Main extends JFrame {
 
+    /**
+     * Default constructor
+     */
     public Main() {
         super("ImageToolkit - Alexandre Ladrière - 2020");
         setResizable(true);
@@ -15,6 +18,11 @@ public class Main extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
+    /**
+     * main
+     *
+     * @param args arguments
+     */
     public static void main(String[] args) {
         new Main();
     }

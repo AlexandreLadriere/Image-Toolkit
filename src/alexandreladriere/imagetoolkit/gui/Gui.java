@@ -4,9 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * Implement the GUI
+ */
 public class Gui extends JPanel {
-    BufferedImage original;
-    BufferedImage preview;
+    private BufferedImage original;
+    private BufferedImage preview;
 
     public Gui() {
         this.setLayout(new BorderLayout());
