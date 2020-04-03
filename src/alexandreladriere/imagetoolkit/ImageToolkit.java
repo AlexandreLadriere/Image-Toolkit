@@ -161,6 +161,28 @@ public final class ImageToolkit {
     }
 
     /**
+     * Convert the given image
+     *
+     * @param inPath  Path of the image that you want to convert (with file name)
+     * @param outPath Destination path (with file name)
+     */
+    public static void convert(String inPath, String outPath) {
+        String extensionIn = FilePathManipulation.getExtension(inPath).toLowerCase();
+        String extensionOut = FilePathManipulation.getExtension(outPath).toLowerCase();
+        // checks if the given file format is supported
+        if (ImageExtensions.contains(extensionIn) && ImageExtensions.contains(extensionOut)) {
+            File input = new File(inPath);
+            try {
+                BufferedImage image = ImageIO.read(input);
+                File output = new File(outPath);
+                ImageIO.write(image, extensionOut, output);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
      * Crop the given image, according to the given positions (which is a rectangle)
      *
      * @param img    Image that you want to crop
