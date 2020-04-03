@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 
 // TODO: Add image to pdf
-// TODO: Add corner radius (see https://stackoverflow.com/questions/7603400/how-to-make-a-rounded-corner-image-in-java)
 
 /**
  * Implement the model
@@ -137,6 +136,13 @@ public final class ImageToolkit {
         }
     }
 
+    /**
+     * Transform the corners of the given image to rounded corners
+     *
+     * @param inPath       Path of the image that you want to crop (with file name)
+     * @param outPath      (Destination path (with file name)
+     * @param cornerRadius Radius that you want for the curve of the corners
+     */
     public static void makeRoundedCorner(String inPath, String outPath, int cornerRadius) {
         String extensionIn = FilePathManipulation.getExtension(inPath).toLowerCase();
         String extensionOut = FilePathManipulation.getExtension(outPath).toLowerCase();
@@ -234,6 +240,14 @@ public final class ImageToolkit {
         return rotatedImage;
     }
 
+    /**
+     * Make rounded corner to the given image
+     *
+     * @param image        Image that you want to transform
+     * @param cornerRadius Radius that you want for the curve of the corners
+     * @param isPng        Boolean to indicates if the image is a png or not, in order to know if we can use alpha or not (true: png; false: not png)
+     * @return Input image with rounded corner
+     */
     public static BufferedImage makeRoundedCorner(BufferedImage image, int cornerRadius, boolean isPng) {
         int w = image.getWidth();
         int h = image.getHeight();
