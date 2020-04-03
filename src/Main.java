@@ -1,3 +1,5 @@
+import alexandreladriere.imagetoolkit.ImageToolkit;
+
 /**
  * Main class
  */
@@ -11,5 +13,6 @@ public class Main {
         // ImageToolkit.crop("C:\\\\Users\\\\Alexandre\\\\Desktop\\\\JAVA\\\\Image Toolkit\\\\test.png", "C:\\\\Users\\\\Alexandre\\\\Desktop\\\\JAVA\\\\Image Toolkit\\\\test4.png", 0, 0, 100, 200);
         // ImageToolkit.crop("C:\\\\Users\\\\Alexandre\\\\Desktop\\\\JAVA\\\\Image Toolkit\\\\test.png", "C:\\\\Users\\\\Alexandre\\\\Desktop\\\\JAVA\\\\Image Toolkit\\\\test2.png", 50, 50, 50, 200);
         // ImageToolkit.crop("C:\\\\Users\\\\Alexandre\\\\Desktop\\\\JAVA\\\\Image Toolkit\\\\test.png", "C:\\\\Users\\\\Alexandre\\\\Desktop\\\\JAVA\\\\Image Toolkit\\\\test3.jpg", 30, 50, 50, 50);
+        ImageToolkit.makeRoundedCorner("C:\\Users\\Alexandre\\Desktop\\JAVA\\Image Toolkit\\game.png", "C:\\Users\\Alexandre\\Desktop\\JAVA\\Image Toolkit\\test.png", 20);
     }
 }

@@ -6,13 +6,14 @@ import alexandreladriere.imagetoolkit.utils.ImageExtensions;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 // TODO: Add image to pdf
-// TODO: Add corner radius
+// TODO: Add corner radius (see https://stackoverflow.com/questions/7603400/how-to-make-a-rounded-corner-image-in-java)
 
 /**
  * Implement the model
@@ -136,6 +137,23 @@ public final class ImageToolkit {
         }
     }
 
+    public static void makeRoundedCorner(String inPath, String outPath, int cornerRadius) {
+        String extensionIn = FilePathManipulation.getExtension(inPath).toLowerCase();
+        String extensionOut = FilePathManipulation.getExtension(outPath).toLowerCase();
+        // checks if the given file format is supported
+        if (ImageExtensions.contains(extensionIn) && ImageExtensions.contains(extensionOut)) {
+            File input = new File(inPath);
+            try {
+                BufferedImage image = ImageIO.read(input);
+                File output = new File(outPath);
+                BufferedImage rounded = makeRoundedCorner(image, cornerRadius, extensionOut.equals(ImageExtensions.PNG.toString()));
+                ImageIO.write(rounded, extensionOut, output);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     /**
      * Crop the given image, according to the given positions (which is a rectangle)
      *
@@ -214,5 +232,26 @@ public final class ImageToolkit {
         final AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
         rotateOp.filter(img, rotatedImage);
         return rotatedImage;
+    }
+
+    public static BufferedImage makeRoundedCorner(BufferedImage image, int cornerRadius, boolean isPng) {
+        int w = image.getWidth();
+        int h = image.getHeight();
+        int rgbType;
+        if (isPng) {
+            rgbType = BufferedImage.TYPE_INT_ARGB; // allows alpha for png format
+        } else {
+            rgbType = BufferedImage.TYPE_INT_RGB;
+        }
+        BufferedImage output = new BufferedImage(w, h, rgbType);
+        Graphics2D g2 = output.createGraphics();
+        g2.setComposite(AlphaComposite.Src);
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setColor(Color.WHITE);
+        g2.fill(new RoundRectangle2D.Float(0, 0, w, h, cornerRadius, cornerRadius));
+        g2.setComposite(AlphaComposite.SrcIn);
+        g2.drawImage(image, 0, 0, null);
+        g2.dispose();
+        return output;
     }
 }
