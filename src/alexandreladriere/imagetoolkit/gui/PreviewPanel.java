@@ -34,6 +34,7 @@ public class PreviewPanel extends JPanel {
         northPanel.add(previewLabel, BorderLayout.CENTER);
         northPanel.add(hwLabel, BorderLayout.EAST);
         this.add(northPanel, BorderLayout.NORTH);
+        // TODO: Faire le south panel (JPanel avec border layout) pour placer les buttons et laisser un panel vide pr les paramètres
     }
 
     /**
