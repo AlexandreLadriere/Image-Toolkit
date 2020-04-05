@@ -15,6 +15,8 @@ public class PreviewPanel extends JPanel {
     protected JLabel previewLabel;
     protected JLabel hwLabel;
 
+    protected JPanel southPanel;
+
     /**
      * Default constructor
      *
@@ -34,7 +36,17 @@ public class PreviewPanel extends JPanel {
         northPanel.add(previewLabel, BorderLayout.CENTER);
         northPanel.add(hwLabel, BorderLayout.EAST);
         this.add(northPanel, BorderLayout.NORTH);
-        // TODO: Faire le south panel (JPanel avec border layout) pour placer les buttons et laisser un panel vide pr les paramètres
+        // South Panel
+        southPanel = new JPanel();
+        southPanel.setLayout(new BorderLayout());
+        // South east panel
+        JPanel southEastPanel = new JPanel();
+        southEastPanel.setLayout(new BorderLayout());
+        southEastPanel.add(cancelButton, BorderLayout.CENTER);
+        southEastPanel.add(applyButton, BorderLayout.EAST);
+        southPanel.add(southEastPanel, BorderLayout.EAST);
+        this.add(southPanel, BorderLayout.SOUTH);
+        // TODO add actionListener to buttons
     }
 
     /**
