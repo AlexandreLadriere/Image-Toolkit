@@ -2,7 +2,6 @@ package alexandreladriere.imagetoolkit.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**
  * Implement the original panel
@@ -10,14 +9,13 @@ import java.awt.image.BufferedImage;
 public class OriginalPanel extends PreviewPanel {
     private FileDialog dialog;
     private JButton openFile;
+    private JLabel imagePathLabel;
 
     /**
      * Default constructor
-     *
-     * @param original Buffered image that you want to display
      */
-    public OriginalPanel(BufferedImage original) {
-        super(original);
+    public OriginalPanel() {
+        super();
         previewLabel.setText("Original");
         // South panel will not be the same as the preview panel
         southPanel = new JPanel();
@@ -25,9 +23,10 @@ public class OriginalPanel extends PreviewPanel {
         dialog = new FileDialog((Frame) null, "Select Image to Open");
         dialog.setMode(FileDialog.LOAD);
         openFile = new JButton("Open image");
-        // TODO add to panel button open image
-        // TODO create and add a JLabel to display image path
-        // TODO make default constructor without args for preview and original panel
+        imagePathLabel = new JLabel("");
+        southPanel.add(imagePathLabel, BorderLayout.CENTER);
+        southPanel.add(openFile, BorderLayout.EAST);
+        this.add(southPanel, BorderLayout.SOUTH);
     }
 
     /**
@@ -46,5 +45,23 @@ public class OriginalPanel extends PreviewPanel {
      */
     public JButton getOpenFile() {
         return openFile;
+    }
+
+    /**
+     * Get the image path label
+     *
+     * @return Image path label
+     */
+    public JLabel getImagePathLabel() {
+        return imagePathLabel;
+    }
+
+    /**
+     * Set the image path label
+     *
+     * @param imagePathLabel The image path label
+     */
+    public void setImagePathLabel(JLabel imagePathLabel) {
+        this.imagePathLabel = imagePathLabel;
     }
 }

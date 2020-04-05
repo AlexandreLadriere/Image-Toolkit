@@ -14,28 +14,30 @@ public class PreviewPanel extends JPanel {
     protected JButton cancelButton;
     protected JLabel previewLabel;
     protected JLabel hwLabel;
+    protected JLabel imageLabel;
 
     protected JPanel southPanel;
 
     /**
      * Default constructor
-     *
-     * @param preview Input image (before transformation)
      */
-    public PreviewPanel(BufferedImage preview) {
-        this.preview = preview;
+    public PreviewPanel() {
         this.setLayout(new BorderLayout());
 
         applyButton = new JButton("Apply");
         cancelButton = new JButton("Cancel");
         previewLabel = new JLabel("Preview");
-        initWidthHeight();
+        // initWidthHeight();
+        hwLabel = new JLabel();
         // North Panel
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new BorderLayout());
         northPanel.add(previewLabel, BorderLayout.CENTER);
         northPanel.add(hwLabel, BorderLayout.EAST);
         this.add(northPanel, BorderLayout.NORTH);
+        // Center
+        imageLabel = new JLabel();
+        this.add(imageLabel, BorderLayout.CENTER);
         // South Panel
         southPanel = new JPanel();
         southPanel.setLayout(new BorderLayout());
@@ -46,13 +48,22 @@ public class PreviewPanel extends JPanel {
         southEastPanel.add(applyButton, BorderLayout.EAST);
         southPanel.add(southEastPanel, BorderLayout.EAST);
         this.add(southPanel, BorderLayout.SOUTH);
-        // TODO add actionListener to buttons
     }
 
     /**
      * Initialize the width and height label of the preview label
      */
-    protected void initWidthHeight() {
-        hwLabel = new JLabel("(height: " + preview.getHeight() + "px ; width: " + preview.getWidth() + "px)");
+    protected void initWidthHeight(BufferedImage preview) {
+        this.preview = preview;
+        hwLabel.setText("(height: " + preview.getHeight() + "px ; width: " + preview.getWidth() + "px)");
+    }
+
+    /**
+     * Update the image label to display
+     *
+     * @param img Image that you want to display inside the label
+     */
+    protected void updateImageLabel(BufferedImage img) {
+        imageLabel.setIcon(new ImageIcon(img));
     }
 }

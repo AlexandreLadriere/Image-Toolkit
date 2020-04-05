@@ -22,7 +22,8 @@ public class Gui extends JPanel {
 
     public Gui() {
         this.setLayout(new BorderLayout());
-
+        previewPanel = new PreviewPanel();
+        originalPanel = new OriginalPanel();
         // Center panel
         JPanel centerPanel = new JPanel();
         centerPanel.setLayout(new BorderLayout());
@@ -40,17 +41,19 @@ public class Gui extends JPanel {
      */
     public void initOriginalImage(String imagePath) {
         originalPath = imagePath;
+        originalPanel.getImagePathLabel().setText(originalPath);
         String extensionIn = FilePathManipulation.getExtension(imagePath).toLowerCase();
         // checks if the given file format is supported
         if (ImageExtensions.contains(extensionIn)) {
-            File input = new File(imagePath);
+            File input = new File(originalPath);
             try {
-                BufferedImage image = ImageIO.read(input);
+                System.out.println(input);
+                original = ImageIO.read(input);
+                originalPanel.updateImageLabel(original);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        // TODO: Display image
     }
 
     /**

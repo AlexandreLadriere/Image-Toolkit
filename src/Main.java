@@ -1,3 +1,5 @@
+import alexandreladriere.imagetoolkit.gui.Gui;
+
 import javax.swing.*;
 
 /**
@@ -11,8 +13,8 @@ public class Main extends JFrame {
     public Main() {
         super("ImageToolkit - Alexandre Ladrière - 2020");
         setResizable(true);
-        // Gui gui = new Gui();
-        // setContentPane(gui);
+        Gui gui = new Gui();
+        setContentPane(gui);
         pack();
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

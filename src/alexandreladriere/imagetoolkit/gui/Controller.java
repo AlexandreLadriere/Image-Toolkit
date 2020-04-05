@@ -25,7 +25,7 @@ public class Controller implements ActionListener {
         // Open original image
         if (cmd.equals(gui.getOriginalPanel().getOpenFile())) {
             gui.getOriginalPanel().getDialog().setVisible(true);
-            gui.initOriginalImage(gui.getOriginalPanel().getDialog().getFile());
+            gui.initOriginalImage(gui.getOriginalPanel().getDialog().getDirectory() + '/' + gui.getOriginalPanel().getDialog().getFile());
         }
     }
 }
