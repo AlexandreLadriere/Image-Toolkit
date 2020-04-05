@@ -55,13 +55,4 @@ public class OriginalPanel extends PreviewPanel {
     public JLabel getImagePathLabel() {
         return imagePathLabel;
     }
-
-    /**
-     * Set the image path label
-     *
-     * @param imagePathLabel The image path label
-     */
-    public void setImagePathLabel(JLabel imagePathLabel) {
-        this.imagePathLabel = imagePathLabel;
-    }
 }

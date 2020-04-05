@@ -19,6 +19,7 @@ public class Gui extends JPanel {
     private BufferedImage preview;
     private PreviewPanel previewPanel;
     private OriginalPanel originalPanel;
+    private SidePanel sidePanel;
 
     public Gui() {
         this.setLayout(new BorderLayout());
@@ -32,6 +33,9 @@ public class Gui extends JPanel {
         originalPanel.getOpenFile().addActionListener(new Controller(this));
         centerPanel.add(originalPanel, BorderLayout.EAST);
         this.add(centerPanel, BorderLayout.CENTER);
+        // West Panel
+        sidePanel = new SidePanel();
+        this.add(sidePanel, BorderLayout.WEST);
     }
 
     /**
@@ -50,6 +54,7 @@ public class Gui extends JPanel {
                 System.out.println(input);
                 original = ImageIO.read(input);
                 originalPanel.updateImageLabel(original);
+                originalPanel.initWidthHeight(original);
             } catch (IOException e) {
                 e.printStackTrace();
             }
