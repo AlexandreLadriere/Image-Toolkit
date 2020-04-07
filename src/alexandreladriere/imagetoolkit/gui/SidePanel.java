@@ -52,4 +52,67 @@ public class SidePanel extends JPanel {
         group.add(iconLabel, BorderLayout.NORTH);
         group.add(nameLabel, BorderLayout.SOUTH);
     }
+
+    /**
+     * Get the convert group composed of an icon and a label
+     *
+     * @return Convert group composed of a label and an icon
+     */
+    public JPanel getConvertGroup() {
+        return convertGroup;
+    }
+
+    /**
+     * Get the crop group composed of an icon and a label
+     *
+     * @return Crop group composed of a label and an icon
+     */
+    public JPanel getCropGroup() {
+        return cropGroup;
+    }
+
+    /**
+     * Get the resize group composed of an icon and a label
+     *
+     * @return Resize group composed of a label and an icon
+     */
+    public JPanel getResizeGroup() {
+        return resizeGroup;
+    }
+
+    /**
+     * Get the rotate group composed of an icon and a label
+     *
+     * @return Rotate group composed of a label and an icon
+     */
+    public JPanel getRotateGroup() {
+        return rotateGroup;
+    }
+
+    /**
+     * Get the rounded corner group composed of an icon and a label
+     *
+     * @return Rounded corner group composed of a label and an icon
+     */
+    public JPanel getRoundedGroup() {
+        return roundedGroup;
+    }
+
+    /**
+     * Get the Cancel all button
+     *
+     * @return Cancel All button
+     */
+    public JButton getCancelAllButton() {
+        return cancelAllButton;
+    }
+
+    /**
+     * Get the Save button
+     *
+     * @return Save button
+     */
+    public JButton getSaveButton() {
+        return saveButton;
+    }
 }

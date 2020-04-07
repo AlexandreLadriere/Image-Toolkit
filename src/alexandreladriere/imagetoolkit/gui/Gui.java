@@ -14,6 +14,7 @@ import java.io.IOException;
  * Implement the GUI
  */
 public class Gui extends JPanel {
+    private Controller controller;
     private BufferedImage original;
     private String originalPath;
     private BufferedImage preview;
@@ -22,6 +23,7 @@ public class Gui extends JPanel {
     private SidePanel sidePanel;
 
     public Gui() {
+        controller = new Controller(this);
         this.setLayout(new BorderLayout());
         previewPanel = new PreviewPanel();
         originalPanel = new OriginalPanel();
@@ -30,11 +32,12 @@ public class Gui extends JPanel {
         centerPanel.setLayout(new BorderLayout());
         centerPanel.add(previewPanel, BorderLayout.WEST);
 
-        originalPanel.getOpenFile().addActionListener(new Controller(this));
+        originalPanel.getOpenFile().addActionListener(controller);
         centerPanel.add(originalPanel, BorderLayout.EAST);
         this.add(centerPanel, BorderLayout.CENTER);
         // West Panel
         sidePanel = new SidePanel();
+        initSidePanelListeners();
         this.add(sidePanel, BorderLayout.WEST);
     }
 
@@ -62,6 +65,19 @@ public class Gui extends JPanel {
     }
 
     /**
+     * Initialize all side panel buttons by adding interaction listeners
+     */
+    private void initSidePanelListeners() {
+        sidePanel.getCancelAllButton().addActionListener(controller);
+        sidePanel.getSaveButton().addActionListener(controller);
+        sidePanel.getConvertGroup().addMouseListener(controller);
+        sidePanel.getCropGroup().addMouseListener(controller);
+        sidePanel.getResizeGroup().addMouseListener(controller);
+        sidePanel.getRotateGroup().addMouseListener(controller);
+        sidePanel.getRoundedGroup().addMouseListener(controller);
+    }
+
+    /**
      * Get the original panel
      *
      * @return Original panel
@@ -77,5 +93,14 @@ public class Gui extends JPanel {
      */
     public void setOriginalPath(String originalPath) {
         this.originalPath = originalPath;
+    }
+
+    /**
+     * Get the side panel object
+     *
+     * @return Side panel object
+     */
+    public SidePanel getSidePanel() {
+        return sidePanel;
     }
 }
