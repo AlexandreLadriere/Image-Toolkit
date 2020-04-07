@@ -25,7 +25,7 @@ public class Gui extends JPanel {
     public Gui() {
         controller = new Controller(this);
         this.setLayout(new BorderLayout());
-        previewPanel = new PreviewPanel();
+        initPreviewPanel();
         originalPanel = new OriginalPanel();
         // Center panel
         JPanel centerPanel = new JPanel();
@@ -42,6 +42,15 @@ public class Gui extends JPanel {
     }
 
     /**
+     * Initialize the preview panel
+     */
+    private void initPreviewPanel() {
+        previewPanel = new PreviewPanel();
+        previewPanel.getCancelButton().addActionListener(controller);
+        previewPanel.getApplyButton().addActionListener(controller);
+    }
+
+    /**
      * Initialize the original image preview
      *
      * @param imagePath Path of the image that you want to display
@@ -54,10 +63,12 @@ public class Gui extends JPanel {
         if (ImageExtensions.contains(extensionIn)) {
             File input = new File(originalPath);
             try {
-                System.out.println(input);
                 original = ImageIO.read(input);
+                preview = original;
                 originalPanel.updateImageLabel(original);
                 originalPanel.initWidthHeight(original);
+                previewPanel.updateImageLabel(original);
+                previewPanel.initWidthHeight(original);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -102,5 +113,51 @@ public class Gui extends JPanel {
      */
     public SidePanel getSidePanel() {
         return sidePanel;
+    }
+
+    /**
+     * Get the preview panel
+     *
+     * @return Preview panel
+     */
+    public PreviewPanel getPreviewPanel() {
+        return previewPanel;
+    }
+
+    /**
+     * Get the original image
+     *
+     * @return Original image
+     */
+    public BufferedImage getOriginal() {
+        return original;
+    }
+
+    /**
+     * Get the preview image
+     *
+     * @return Preview image
+     */
+    public BufferedImage getPreview() {
+        return preview;
+    }
+
+    /**
+     * Set the preview image
+     *
+     * @param preview New preview image
+     */
+    public void setPreview(BufferedImage preview) {
+        this.preview = preview;
+        previewPanel.updateImageLabel(preview);
+    }
+
+    /**
+     * Get the path of the original image
+     *
+     * @return Path of the original image
+     */
+    public String getOriginalPath() {
+        return originalPath;
     }
 }

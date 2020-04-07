@@ -1,9 +1,14 @@
 package alexandreladriere.imagetoolkit.gui;
 
+import alexandreladriere.imagetoolkit.ImageToolkit;
+import alexandreladriere.imagetoolkit.utils.FilePathManipulation;
+import alexandreladriere.imagetoolkit.utils.ImageExtensions;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 
 /**
  * Implements the controller of the GUI
@@ -35,6 +40,28 @@ public class Controller implements ActionListener, MouseListener {
             gui.getOriginalPanel().getDialog().setVisible(true);
             gui.initOriginalImage(gui.getOriginalPanel().getDialog().getDirectory() + '/' + gui.getOriginalPanel().getDialog().getFile());
         }
+        if (cmd.equals(gui.getPreviewPanel().getApplyButton()) && isRoundedCorners) {
+            RoundedCornersParamPanel paramPanel = (RoundedCornersParamPanel) gui.getPreviewPanel().getParamPanel();
+            BufferedImage newPreview = ImageToolkit.makeRoundedCorner(gui.getPreview(), paramPanel.getRadius(), FilePathManipulation.getExtension(gui.getOriginalPath()).equals(ImageExtensions.PNG.toString()));
+            gui.setPreview(newPreview);
+            gui.getPreviewPanel().initWidthHeight(newPreview);
+        }
+        if (cmd.equals(gui.getPreviewPanel().getApplyButton()) && isResize) {
+
+        }
+        if (cmd.equals(gui.getPreviewPanel().getApplyButton()) && isCrop) {
+
+        }
+        if (cmd.equals(gui.getPreviewPanel().getApplyButton()) && isRotate) {
+            RotateParamPanel paramPanel = (RotateParamPanel) gui.getPreviewPanel().getParamPanel();
+            System.out.println(paramPanel.getAngle());
+            BufferedImage newPreview = ImageToolkit.rotate(gui.getOriginal(), paramPanel.getAngle(), FilePathManipulation.getExtension(gui.getOriginalPath()).equals(ImageExtensions.PNG.toString()));
+            gui.setPreview(newPreview);
+            gui.getPreviewPanel().initWidthHeight(newPreview);
+        }
+        if (cmd.equals(gui.getPreviewPanel().getApplyButton()) && isConvert) {
+
+        }
     }
 
     @Override
@@ -46,6 +73,7 @@ public class Controller implements ActionListener, MouseListener {
             isCrop = false;
             isRotate = false;
             isRoundedCorners = false;
+            gui.getPreviewPanel().initConvertParam();
         }
         if (cmd.equals(gui.getSidePanel().getCropGroup())) {
             isConvert = false;
@@ -53,6 +81,7 @@ public class Controller implements ActionListener, MouseListener {
             isCrop = true;
             isRotate = false;
             isRoundedCorners = false;
+            gui.getPreviewPanel().initCropParam();
         }
         if (cmd.equals(gui.getSidePanel().getResizeGroup())) {
             isConvert = false;
@@ -60,6 +89,7 @@ public class Controller implements ActionListener, MouseListener {
             isCrop = false;
             isRotate = false;
             isRoundedCorners = false;
+            gui.getPreviewPanel().initResizeParam();
         }
         if (cmd.equals(gui.getSidePanel().getRotateGroup())) {
             isConvert = false;
@@ -67,6 +97,7 @@ public class Controller implements ActionListener, MouseListener {
             isCrop = false;
             isRotate = true;
             isRoundedCorners = false;
+            gui.getPreviewPanel().initRotateParam();
         }
         if (cmd.equals(gui.getSidePanel().getRoundedGroup())) {
             isConvert = false;
@@ -74,6 +105,7 @@ public class Controller implements ActionListener, MouseListener {
             isCrop = false;
             isRotate = false;
             isRoundedCorners = true;
+            gui.getPreviewPanel().initRoundedCornersParam();
         }
     }
 
@@ -94,6 +126,6 @@ public class Controller implements ActionListener, MouseListener {
 
     @Override
     public void mouseExited(MouseEvent mouseEvent) {
-
+        Object cmd = mouseEvent.getSource();
     }
 }

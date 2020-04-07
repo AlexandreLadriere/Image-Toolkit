@@ -17,6 +17,7 @@ public class PreviewPanel extends JPanel {
     protected JLabel imageLabel;
 
     protected JPanel southPanel;
+    protected JPanel paramPanel;
 
     /**
      * Default constructor
@@ -46,8 +47,59 @@ public class PreviewPanel extends JPanel {
         southEastPanel.setLayout(new BorderLayout());
         southEastPanel.add(cancelButton, BorderLayout.CENTER);
         southEastPanel.add(applyButton, BorderLayout.EAST);
+        paramPanel = new JPanel();
+        southPanel.add(paramPanel, BorderLayout.CENTER);
         southPanel.add(southEastPanel, BorderLayout.EAST);
         this.add(southPanel, BorderLayout.SOUTH);
+    }
+
+    /**
+     * Initialize the parameters for the "Rounded corners" option
+     */
+    protected void initRoundedCornersParam() {
+        southPanel.remove(paramPanel);
+        paramPanel = new RoundedCornersParamPanel();
+        southPanel.add(paramPanel, BorderLayout.CENTER);
+        southPanel.revalidate();
+    }
+
+    /**
+     * Initialize the parameters for the "Resize" option
+     */
+    protected void initResizeParam() {
+        southPanel.remove(paramPanel);
+        paramPanel = new ResizeParamPanel();
+        southPanel.add(paramPanel, BorderLayout.CENTER);
+        southPanel.revalidate();
+    }
+
+    /**
+     * Initialize the parameters for the "Crop" option
+     */
+    protected void initCropParam() {
+        southPanel.remove(paramPanel);
+        paramPanel = new CropParamPanel();
+        southPanel.add(paramPanel, BorderLayout.CENTER);
+        southPanel.revalidate();
+    }
+
+    /**
+     * Initialize the parameters for the "Convert" option
+     */
+    protected void initConvertParam() {
+        southPanel.remove(paramPanel);
+        paramPanel = new ConvertParamPanel();
+        southPanel.add(paramPanel, BorderLayout.CENTER);
+        southPanel.revalidate();
+    }
+
+    /**
+     * Initialize the parameters for the "Rotate" option
+     */
+    protected void initRotateParam() {
+        paramPanel = new RotateParamPanel();
+        southPanel.add(paramPanel, BorderLayout.CENTER);
+        southPanel.revalidate();
     }
 
     /**
@@ -65,5 +117,27 @@ public class PreviewPanel extends JPanel {
      */
     protected void updateImageLabel(BufferedImage img) {
         imageLabel.setIcon(new ImageIcon(img));
+    }
+
+    /**
+     * Get the "Apply" button
+     *
+     * @return Apply button
+     */
+    public JButton getApplyButton() {
+        return applyButton;
+    }
+
+    /**
+     * Get the "Cancel" button
+     *
+     * @return Cancel button
+     */
+    public JButton getCancelButton() {
+        return cancelButton;
+    }
+
+    public JPanel getParamPanel() {
+        return paramPanel;
     }
 }
