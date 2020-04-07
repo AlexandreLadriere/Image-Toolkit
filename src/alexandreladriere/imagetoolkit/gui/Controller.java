@@ -12,6 +12,12 @@ public class Controller implements ActionListener, MouseListener {
 
     private Gui gui;
 
+    private boolean isRoundedCorners = false;
+    private boolean isResize = true;
+    private boolean isCrop = false;
+    private boolean isConvert = false;
+    private boolean isRotate = false;
+
     /**
      * Default constructor
      *
@@ -35,19 +41,39 @@ public class Controller implements ActionListener, MouseListener {
     public void mouseClicked(MouseEvent mouseEvent) {
         Object cmd = mouseEvent.getSource();
         if (cmd.equals(gui.getSidePanel().getConvertGroup())) {
-            // convert
+            isConvert = true;
+            isResize = false;
+            isCrop = false;
+            isRotate = false;
+            isRoundedCorners = false;
         }
         if (cmd.equals(gui.getSidePanel().getCropGroup())) {
-            // crop
+            isConvert = false;
+            isResize = false;
+            isCrop = true;
+            isRotate = false;
+            isRoundedCorners = false;
         }
         if (cmd.equals(gui.getSidePanel().getResizeGroup())) {
-            // resize
+            isConvert = false;
+            isResize = true;
+            isCrop = false;
+            isRotate = false;
+            isRoundedCorners = false;
         }
         if (cmd.equals(gui.getSidePanel().getRotateGroup())) {
-            // rotate
+            isConvert = false;
+            isResize = false;
+            isCrop = false;
+            isRotate = true;
+            isRoundedCorners = false;
         }
         if (cmd.equals(gui.getSidePanel().getRoundedGroup())) {
-            // rounded corners
+            isConvert = false;
+            isResize = false;
+            isCrop = false;
+            isRotate = false;
+            isRoundedCorners = true;
         }
     }
 
