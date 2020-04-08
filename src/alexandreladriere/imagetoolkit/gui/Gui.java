@@ -1,5 +1,8 @@
 package alexandreladriere.imagetoolkit.gui;
 
+import alexandreladriere.imagetoolkit.gui.custompanels.OriginalPanel;
+import alexandreladriere.imagetoolkit.gui.custompanels.PreviewPanel;
+import alexandreladriere.imagetoolkit.gui.custompanels.SidePanel;
 import alexandreladriere.imagetoolkit.utils.FilePathManipulation;
 import alexandreladriere.imagetoolkit.utils.ImageExtensions;
 

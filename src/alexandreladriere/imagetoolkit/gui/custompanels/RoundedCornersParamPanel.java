@@ -1,4 +1,4 @@
-package alexandreladriere.imagetoolkit.gui;
+package alexandreladriere.imagetoolkit.gui.custompanels;
 
 import alexandreladriere.imagetoolkit.utils.UtilsFunctions;
 

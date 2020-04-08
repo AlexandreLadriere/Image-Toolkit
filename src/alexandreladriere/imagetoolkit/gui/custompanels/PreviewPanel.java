@@ -1,4 +1,4 @@
-package alexandreladriere.imagetoolkit.gui;
+package alexandreladriere.imagetoolkit.gui.custompanels;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +18,13 @@ public class PreviewPanel extends JPanel {
 
     protected JPanel southPanel;
     protected JPanel paramPanel;
+    protected CardLayout paramCardLayout;
+    protected String[] paramPanelName = {"RESIZE", "CROP", "ROUNDED_CORNER", "CONVERT", "ROTATE"};
+    protected JPanel resizeCard;
+    protected JPanel rotateCard;
+    protected JPanel cropCard;
+    protected JPanel roundedCornerCard;
+    protected JPanel convertCard;
 
     /**
      * Default constructor
@@ -47,7 +54,20 @@ public class PreviewPanel extends JPanel {
         southEastPanel.setLayout(new BorderLayout());
         southEastPanel.add(cancelButton, BorderLayout.CENTER);
         southEastPanel.add(applyButton, BorderLayout.EAST);
+        // South panel - Card layout
+        paramCardLayout = new CardLayout();
+        rotateCard = new RotateParamPanel();
+        resizeCard = new ResizeParamPanel();
+        roundedCornerCard = new RoundedCornersParamPanel();
+        cropCard = new CropParamPanel();
+        convertCard = new ConvertParamPanel();
         paramPanel = new JPanel();
+        paramPanel.setLayout(paramCardLayout);
+        paramPanel.add(resizeCard, paramPanelName[0]);
+        paramPanel.add(rotateCard, paramPanelName[4]);
+        paramPanel.add(roundedCornerCard, paramPanelName[2]);
+        paramPanel.add(convertCard, paramPanelName[3]);
+        paramPanel.add(cropCard, paramPanelName[1]);
         southPanel.add(paramPanel, BorderLayout.CENTER);
         southPanel.add(southEastPanel, BorderLayout.EAST);
         this.add(southPanel, BorderLayout.SOUTH);
@@ -56,56 +76,42 @@ public class PreviewPanel extends JPanel {
     /**
      * Initialize the parameters for the "Rounded corners" option
      */
-    protected void initRoundedCornersParam() {
-        southPanel.remove(paramPanel);
-        paramPanel = new RoundedCornersParamPanel();
-        southPanel.add(paramPanel, BorderLayout.CENTER);
-        southPanel.revalidate();
+    public void initRoundedCornersParam() {
+        paramCardLayout.show(paramPanel, paramPanelName[2]);
     }
 
     /**
      * Initialize the parameters for the "Resize" option
      */
-    protected void initResizeParam() {
-        southPanel.remove(paramPanel);
-        paramPanel = new ResizeParamPanel();
-        southPanel.add(paramPanel, BorderLayout.CENTER);
-        southPanel.revalidate();
+    public void initResizeParam() {
+        paramCardLayout.show(paramPanel, paramPanelName[0]);
     }
 
     /**
      * Initialize the parameters for the "Crop" option
      */
-    protected void initCropParam() {
-        southPanel.remove(paramPanel);
-        paramPanel = new CropParamPanel();
-        southPanel.add(paramPanel, BorderLayout.CENTER);
-        southPanel.revalidate();
+    public void initCropParam() {
+        paramCardLayout.show(paramPanel, paramPanelName[1]);
     }
 
     /**
      * Initialize the parameters for the "Convert" option
      */
-    protected void initConvertParam() {
-        southPanel.remove(paramPanel);
-        paramPanel = new ConvertParamPanel();
-        southPanel.add(paramPanel, BorderLayout.CENTER);
-        southPanel.revalidate();
+    public void initConvertParam() {
+        paramCardLayout.show(paramPanel, paramPanelName[3]);
     }
 
     /**
      * Initialize the parameters for the "Rotate" option
      */
-    protected void initRotateParam() {
-        paramPanel = new RotateParamPanel();
-        southPanel.add(paramPanel, BorderLayout.CENTER);
-        southPanel.revalidate();
+    public void initRotateParam() {
+        paramCardLayout.show(paramPanel, paramPanelName[4]);
     }
 
     /**
      * Initialize the width and height label of the preview label
      */
-    protected void initWidthHeight(BufferedImage preview) {
+    public void initWidthHeight(BufferedImage preview) {
         this.preview = preview;
         hwLabel.setText("(height: " + preview.getHeight() + "px ; width: " + preview.getWidth() + "px)");
     }
@@ -115,7 +121,7 @@ public class PreviewPanel extends JPanel {
      *
      * @param img Image that you want to display inside the label
      */
-    protected void updateImageLabel(BufferedImage img) {
+    public void updateImageLabel(BufferedImage img) {
         imageLabel.setIcon(new ImageIcon(img));
     }
 
@@ -137,7 +143,22 @@ public class PreviewPanel extends JPanel {
         return cancelButton;
     }
 
-    public JPanel getParamPanel() {
-        return paramPanel;
+    /**
+     * Get the current card in the card layout
+     *
+     * @return Current card in the card layout
+     */
+    public JPanel getParamCurrentPanel() {
+        JPanel currentPanel = null;
+
+        for (Component component : paramPanel.getComponents()) {
+            if (component.isVisible()) {
+                if (component instanceof JPanel)
+                    currentPanel = (JPanel) component;
+                else if (component instanceof JScrollPane)
+                    currentPanel = (JPanel) ((JScrollPane) component).getViewport().getComponent(0);
+            }
+        }
+        return currentPanel;
     }
 }

@@ -1,6 +1,8 @@
 package alexandreladriere.imagetoolkit.gui;
 
 import alexandreladriere.imagetoolkit.ImageToolkit;
+import alexandreladriere.imagetoolkit.gui.custompanels.RotateParamPanel;
+import alexandreladriere.imagetoolkit.gui.custompanels.RoundedCornersParamPanel;
 import alexandreladriere.imagetoolkit.utils.FilePathManipulation;
 import alexandreladriere.imagetoolkit.utils.ImageExtensions;
 
@@ -41,7 +43,7 @@ public class Controller implements ActionListener, MouseListener {
             gui.initOriginalImage(gui.getOriginalPanel().getDialog().getDirectory() + '/' + gui.getOriginalPanel().getDialog().getFile());
         }
         if (cmd.equals(gui.getPreviewPanel().getApplyButton()) && isRoundedCorners) {
-            RoundedCornersParamPanel paramPanel = (RoundedCornersParamPanel) gui.getPreviewPanel().getParamPanel();
+            RoundedCornersParamPanel paramPanel = (RoundedCornersParamPanel) gui.getPreviewPanel().getParamCurrentPanel();
             BufferedImage newPreview = ImageToolkit.makeRoundedCorner(gui.getPreview(), paramPanel.getRadius(), FilePathManipulation.getExtension(gui.getOriginalPath()).equals(ImageExtensions.PNG.toString()));
             gui.setPreview(newPreview);
             gui.getPreviewPanel().initWidthHeight(newPreview);
@@ -53,8 +55,7 @@ public class Controller implements ActionListener, MouseListener {
 
         }
         if (cmd.equals(gui.getPreviewPanel().getApplyButton()) && isRotate) {
-            RotateParamPanel paramPanel = (RotateParamPanel) gui.getPreviewPanel().getParamPanel();
-            System.out.println(paramPanel.getAngle());
+            RotateParamPanel paramPanel = (RotateParamPanel) gui.getPreviewPanel().getParamCurrentPanel();
             BufferedImage newPreview = ImageToolkit.rotate(gui.getOriginal(), paramPanel.getAngle(), FilePathManipulation.getExtension(gui.getOriginalPath()).equals(ImageExtensions.PNG.toString()));
             gui.setPreview(newPreview);
             gui.getPreviewPanel().initWidthHeight(newPreview);
