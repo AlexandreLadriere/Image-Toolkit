@@ -1,11 +1,13 @@
 package alexandreladriere.imagetoolkit.gui;
 
 import alexandreladriere.imagetoolkit.ImageToolkit;
+import alexandreladriere.imagetoolkit.gui.custompanels.ResizeParamPanel;
 import alexandreladriere.imagetoolkit.gui.custompanels.RotateParamPanel;
 import alexandreladriere.imagetoolkit.gui.custompanels.RoundedCornersParamPanel;
 import alexandreladriere.imagetoolkit.utils.FilePathManipulation;
 import alexandreladriere.imagetoolkit.utils.ImageExtensions;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -49,7 +51,16 @@ public class Controller implements ActionListener, MouseListener {
             gui.getPreviewPanel().initWidthHeight(newPreview);
         }
         if (cmd.equals(gui.getPreviewPanel().getApplyButton()) && isResize) {
-
+            ResizeParamPanel paramPanel = (ResizeParamPanel) gui.getPreviewPanel().getParamCurrentPanel();
+            BufferedImage newPreview;
+            if (paramPanel.getRatioRadioButton().isSelected()) {
+                newPreview = ImageToolkit.resize(gui.getPreview(), paramPanel.getRatio(), Image.SCALE_SMOOTH, FilePathManipulation.getExtension(gui.getOriginalPath()).equals(ImageExtensions.PNG.toString()));
+                // TODO not working
+            } else {
+                newPreview = ImageToolkit.resize(gui.getPreview(), paramPanel.getHeight(), paramPanel.getWidth(), Image.SCALE_SMOOTH, FilePathManipulation.getExtension(gui.getOriginalPath()).equals(ImageExtensions.PNG.toString()));
+            }
+            gui.setPreview(newPreview);
+            gui.getPreviewPanel().initWidthHeight(newPreview);
         }
         if (cmd.equals(gui.getPreviewPanel().getApplyButton()) && isCrop) {
 
