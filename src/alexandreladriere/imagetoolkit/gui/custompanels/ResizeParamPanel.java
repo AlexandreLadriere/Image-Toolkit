@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ResizeParamPanel extends JPanel {
+
+    private JTextField heightTextField;
+    private JTextField widthTextField;
+
     public ResizeParamPanel() {
         super();
         this.setLayout(new BorderLayout());

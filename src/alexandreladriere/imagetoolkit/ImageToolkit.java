@@ -70,13 +70,9 @@ public final class ImageToolkit {
                 } else {
                     scaleType = Image.SCALE_FAST;
                 }
-                double factor = (double) ratio / (double) 100;
-                int newWidth = (int) Math.round((double) image.getWidth() * factor);
-                int newHeight = (int) Math.round((double) image.getHeight() * factor);
-                BufferedImage resized = resize(image, newHeight, newWidth, scaleType, extensionOut.equals(ImageExtensions.PNG.toString()));
+                BufferedImage resized = resize(image, ratio, scaleType, extensionOut.equals(ImageExtensions.PNG.toString()));
                 File output = new File(outPath);
                 ImageIO.write(resized, extensionOut, output);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -217,6 +213,36 @@ public final class ImageToolkit {
      */
     public static BufferedImage resize(BufferedImage img, int height, int width, int scaleType, boolean isPng) {
         Image tmp = img.getScaledInstance(width, height, scaleType);
+        return createResizedImg(tmp, width, height, isPng);
+    }
+
+    /**
+     * Resize the given BufferedImage
+     *
+     * @param img       Image that you want to resize
+     * @param ratio     Resize ratio (in %)
+     * @param scaleType Image scale type (smooth and slow: Image.SCALE_SMOOTH or fast: Image.SCALE_FAST)
+     * @param isPng     Boolean to indicates if the image is a png or not, in order to know if we can use alpha or not (true: png; false: not png)
+     * @return The resized image
+     */
+    public static BufferedImage resize(BufferedImage img, int ratio, int scaleType, boolean isPng) {
+        double factor = (double) ratio / (double) 100;
+        int newWidth = (int) Math.round((double) img.getWidth() * factor);
+        int newHeight = (int) Math.round((double) img.getHeight() * factor);
+        Image tmp = img.getScaledInstance(img.getWidth(), img.getHeight(), scaleType);
+        return createResizedImg(tmp, newWidth, newHeight, isPng);
+    }
+
+    /**
+     * Create a resized image from a given Image
+     *
+     * @param original Image instance that you want to resize
+     * @param width    New width (px)
+     * @param height   New height (px)
+     * @param isPng    Boolean to indicates if the image is a png or not, in order to know if we can use alpha or not (true: png; false: not png)
+     * @return Resized Image
+     */
+    private static BufferedImage createResizedImg(Image original, int width, int height, boolean isPng) {
         int rgbType;
         if (isPng) {
             rgbType = BufferedImage.TYPE_INT_ARGB; // allows alpha for png format
@@ -225,7 +251,7 @@ public final class ImageToolkit {
         }
         BufferedImage resized = new BufferedImage(width, height, rgbType);
         Graphics2D g2d = resized.createGraphics();
-        g2d.drawImage(tmp, 0, 0, null);
+        g2d.drawImage(original, 0, 0, null);
         g2d.dispose();
         return resized;
     }
