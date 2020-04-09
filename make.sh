@@ -138,6 +138,7 @@ function clean() {
     echo "Nothing to clean"
   else
     rm -r $OUT_PATH
+    rm -r $DOC_PATH
     echo "Folder cleaned"
     exit
   fi
