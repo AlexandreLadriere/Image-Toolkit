@@ -1,7 +1,9 @@
-# (WIP) Image toolkit
+# (GUI - WIP) Image toolkit
 
 [![GitHub license](https://img.shields.io/github/license/AlexandreLadriere/Image-Toolkit.svg)](https://github.com/AlexandreLadriere/Image-Toolkit/blob/master/LICENSE)
 [![GitHub forks](https://img.shields.io/github/forks/AlexandreLadriere/Image-Toolkit.svg)](https://github.com/AlexandreLadriere/Image-Toolkit)
+
+__This branch is in WIP status. It might not be finished and this branch will certainly be deleted.__
 
 I often need to quickly resize or crop images. In order to do that, I used to use an online converter/tool. 
 However, sometimes I don't have an Internet connection, so I decided to develop my own tool (and also because I have nothing else to do during this Covid-19 crisis).
